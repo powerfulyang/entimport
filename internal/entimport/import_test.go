@@ -1928,7 +1928,7 @@ func MockPostgresSingleTableFields() *schema.Schema {
 		Unique: true,
 		Table:  table,
 		Attrs: []schema.Attr{
-			&postgres.ConType{
+			&postgres.Constraint{
 				T: "p",
 			},
 		},
@@ -2011,7 +2011,7 @@ func MockPostgresTableFieldsWithAttributes() *schema.Schema {
 		Unique: true,
 		Table:  table,
 		Attrs: []schema.Attr{
-			&postgres.ConType{
+			&postgres.Constraint{
 				T: "p",
 			},
 		},
@@ -2195,7 +2195,7 @@ func MockPostgresMultiTableFields() *schema.Schema {
 		Unique: true,
 		Table:  tableA,
 		Attrs: []schema.Attr{
-			&postgres.ConType{
+			&postgres.Constraint{
 				T: "p",
 			},
 		},
@@ -2336,7 +2336,7 @@ func MockPostgresNonDefaultPrimaryKey() *schema.Schema {
 		Unique: true,
 		Table:  table,
 		Attrs: []schema.Attr{
-			&postgres.ConType{
+			&postgres.Constraint{
 				T: "p",
 			},
 		},
@@ -2397,7 +2397,7 @@ func MockPostgresNonDefaultPrimaryKeyWithIndexes() *schema.Schema {
 		Unique: true,
 		Table:  table,
 		Attrs: []schema.Attr{
-			&postgres.ConType{
+			&postgres.Constraint{
 				T: "p",
 			},
 		},
@@ -2458,7 +2458,7 @@ func MockPostgresM2MTwoTypes() *schema.Schema {
 			&postgres.IndexType{
 				T: "btree",
 			},
-			&postgres.ConType{
+			&postgres.Constraint{
 				T: "p",
 			},
 		},
@@ -2523,7 +2523,7 @@ func MockPostgresM2MTwoTypes() *schema.Schema {
 			&postgres.IndexType{
 				T: "btree",
 			},
-			&postgres.ConType{
+			&postgres.Constraint{
 				T: "p",
 			},
 		},
@@ -2597,7 +2597,7 @@ func MockPostgresM2MTwoTypes() *schema.Schema {
 			&postgres.IndexType{
 				T: "btree",
 			},
-			&postgres.ConType{
+			&postgres.Constraint{
 				T: "p",
 			},
 		},
@@ -2679,7 +2679,7 @@ func MockPostgresM2MSameType() *schema.Schema {
 			&postgres.IndexType{
 				T: "btree",
 			},
-			&postgres.ConType{
+			&postgres.Constraint{
 				T: "p",
 			},
 		},
@@ -2731,7 +2731,7 @@ func MockPostgresM2MSameType() *schema.Schema {
 			&postgres.IndexType{
 				T: "btree",
 			},
-			&postgres.ConType{
+			&postgres.Constraint{
 				T: "p",
 			},
 		},
@@ -2835,7 +2835,7 @@ func MockPostgresM2MBidirectional() *schema.Schema {
 			&postgres.IndexType{
 				T: "btree",
 			},
-			&postgres.ConType{
+			&postgres.Constraint{
 				T: "p",
 			},
 		},
@@ -2900,7 +2900,7 @@ func MockPostgresM2MBidirectional() *schema.Schema {
 			&postgres.IndexType{
 				T: "btree",
 			},
-			&postgres.ConType{
+			&postgres.Constraint{
 				T: "p",
 			},
 		},
@@ -3004,7 +3004,7 @@ func MockPostgresO2OTwoTypes() *schema.Schema {
 			&postgres.IndexType{
 				T: "btree",
 			},
-			&postgres.ConType{
+			&postgres.Constraint{
 				T: "p",
 			},
 		},
@@ -3077,7 +3077,7 @@ func MockPostgresO2OTwoTypes() *schema.Schema {
 			&postgres.IndexType{
 				T: "btree",
 			},
-			&postgres.ConType{
+			&postgres.Constraint{
 				T: "p",
 			},
 		},
@@ -3113,7 +3113,7 @@ func MockPostgresO2OTwoTypes() *schema.Schema {
 				&postgres.IndexType{
 					T: "btree",
 				},
-				&postgres.ConType{
+				&postgres.Constraint{
 					T: "u",
 				},
 			},
@@ -3192,7 +3192,7 @@ func MockPostgresO2OSameType() *schema.Schema {
 			&postgres.IndexType{
 				T: "btree",
 			},
-			&postgres.ConType{
+			&postgres.Constraint{
 				T: "p",
 			},
 		},
@@ -3230,7 +3230,7 @@ func MockPostgresO2OSameType() *schema.Schema {
 				&postgres.IndexType{
 					T: "btree",
 				},
-				&postgres.ConType{
+				&postgres.Constraint{
 					T: "u",
 				},
 			},
@@ -3316,7 +3316,7 @@ func MockPostgresO2OBidirectional() *schema.Schema {
 			&postgres.IndexType{
 				T: "btree",
 			},
-			&postgres.ConType{
+			&postgres.Constraint{
 				T: "p",
 			},
 		},
@@ -3354,7 +3354,7 @@ func MockPostgresO2OBidirectional() *schema.Schema {
 				&postgres.IndexType{
 					T: "btree",
 				},
-				&postgres.ConType{
+				&postgres.Constraint{
 					T: "u",
 				},
 			},
@@ -3429,7 +3429,7 @@ func MockPostgresO2MTwoTypes() *schema.Schema {
 			&postgres.IndexType{
 				T: "btree",
 			},
-			&postgres.ConType{
+			&postgres.Constraint{
 				T: "p",
 			},
 		},
@@ -3494,7 +3494,7 @@ func MockPostgresO2MTwoTypes() *schema.Schema {
 			&postgres.IndexType{
 				T: "btree",
 			},
-			&postgres.ConType{
+			&postgres.Constraint{
 				T: "p",
 			},
 		},
@@ -3581,7 +3581,7 @@ func MockPostgresO2MSameType() *schema.Schema {
 			&postgres.IndexType{
 				T: "btree",
 			},
-			&postgres.ConType{
+			&postgres.Constraint{
 				T: "p",
 			},
 		},
@@ -3665,7 +3665,7 @@ func MockPostgresO2XOtherSideIgnored() *schema.Schema {
 			&postgres.IndexType{
 				T: "btree",
 			},
-			&postgres.ConType{
+			&postgres.Constraint{
 				T: "p",
 			},
 		},
@@ -3730,7 +3730,7 @@ func MockPostgresO2XOtherSideIgnored() *schema.Schema {
 			&postgres.IndexType{
 				T: "btree",
 			},
-			&postgres.ConType{
+			&postgres.Constraint{
 				T: "p",
 			},
 		},
@@ -3803,7 +3803,7 @@ func MockPostgresM2MJoinTableOnly() *schema.Schema {
 			&postgres.IndexType{
 				T: "btree",
 			},
-			&postgres.ConType{
+			&postgres.Constraint{
 				T: "p",
 			},
 		},
@@ -3868,7 +3868,7 @@ func MockPostgresM2MJoinTableOnly() *schema.Schema {
 			&postgres.IndexType{
 				T: "btree",
 			},
-			&postgres.ConType{
+			&postgres.Constraint{
 				T: "p",
 			},
 		},
@@ -3942,7 +3942,7 @@ func MockPostgresM2MJoinTableOnly() *schema.Schema {
 			&postgres.IndexType{
 				T: "btree",
 			},
-			&postgres.ConType{
+			&postgres.Constraint{
 				T: "p",
 			},
 		},
@@ -3980,7 +3980,7 @@ type inspectorMock struct {
 	mock.Mock
 }
 
-func (_m *inspectorMock) InspectTable(_ context.Context, _ string, _ *schema.InspectTableOptions) (*schema.Table, error) {
+func (_m *inspectorMock) InspectTable(_ context.Context, _ string, _ any) (*schema.Table, error) {
 	return nil, nil
 }
 
