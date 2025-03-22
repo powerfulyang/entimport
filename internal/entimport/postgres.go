@@ -79,8 +79,20 @@ func (p *Postgres) field(column *schema.Column) (f ent.Field, err error) {
 		f = p.convertSerial(typ, name)
 	case *postgres.UUIDType:
 		f = field.UUID(name, uuid.New())
+	case *postgres.ArrayType:
+		switch typ := typ.Type.(type) {
+		case *schema.IntegerType:
+			f = field.Ints(name)
+		case *schema.DecimalType:
+			f = field.Floats(name)
+		case *schema.StringType:
+			f = field.Strings(name)
+		default:
+			return nil, fmt.Errorf("entimport: unsupported arary %+v %T for column %v", typ, typ, column.Name)
+		}
+
 	default:
-		return nil, fmt.Errorf("entimport: unsupported type %q for column %v", typ, column.Name)
+		return nil, fmt.Errorf("entimport: unsupported type %T for column %v", typ, column.Name)
 	}
 	applyColumnAttributes(f, column)
 	return f, err
