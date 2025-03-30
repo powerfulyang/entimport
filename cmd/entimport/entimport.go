@@ -4,12 +4,11 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"github.com/powerfulyang/entimport/internal/entimport"
+	"github.com/powerfulyang/entimport/internal/mux"
 	"log"
 	"os"
 	"strings"
-
-	"github.com/guillermo/entimport/internal/entimport"
-	"github.com/guillermo/entimport/internal/mux"
 )
 
 var (

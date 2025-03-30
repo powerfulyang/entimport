@@ -4,9 +4,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/powerfulyang/entimport/internal/mux"
 
 	"ariga.io/atlas/sql/schema"
-	"github.com/guillermo/entimport/internal/mux"
 
 	"entgo.io/contrib/schemast"
 	"entgo.io/ent"
@@ -200,6 +200,7 @@ func upsertManyToMany(mutations map[string]schemast.Mutator, table *schema.Table
 	tableB := table.ForeignKeys[1].RefTable
 	var opts relOptions
 	if tableA.Name == tableB.Name {
+
 		opts.recursive = true
 	}
 	nodeA, ok := mutations[tableA.Name].(*schemast.UpsertSchema)

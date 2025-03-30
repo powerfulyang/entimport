@@ -2,6 +2,7 @@ package entimport_test
 
 import (
 	"context"
+	"github.com/powerfulyang/entimport/internal/mux"
 	"go/ast"
 	"io/ioutil"
 	"os"
@@ -11,7 +12,6 @@ import (
 	"ariga.io/atlas/sql/mysql"
 	"ariga.io/atlas/sql/postgres"
 	"ariga.io/atlas/sql/schema"
-	"github.com/guillermo/entimport/internal/mux"
 
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"

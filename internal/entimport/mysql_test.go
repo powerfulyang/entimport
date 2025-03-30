@@ -3,13 +3,13 @@ package entimport_test
 import (
 	"bytes"
 	"context"
+	"github.com/powerfulyang/entimport/internal/entimport"
 	"go/parser"
 	"go/printer"
 	"go/token"
 	"testing"
 
 	"ariga.io/atlas/sql/schema"
-	"github.com/guillermo/entimport/internal/entimport"
 
 	"entgo.io/ent/dialect"
 	"github.com/go-openapi/inflect"
