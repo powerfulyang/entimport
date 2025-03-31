@@ -1,1 +1,3 @@
 .idea
+ent/schema/*
+!ent/schema/.gitkeep
