@@ -4,9 +4,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
+
 	"github.com/powerfulyang/entimport/internal/mux"
 
 	"ariga.io/atlas/sql/schema"
+
+	"strings"
 
 	"entgo.io/contrib/schemast"
 	"entgo.io/ent"
@@ -35,6 +38,7 @@ type (
 		uniqueEdgeFromParent bool
 		refName              string
 		edgeField            string
+		name                 string
 	}
 
 	// fieldFunc receives an Atlas column and converts it to an Ent field.
@@ -143,6 +147,9 @@ func entEdge(nodeName, nodeType string, currentNode *schemast.UpsertSchema, dir 
 		if opts.recursive {
 			desc.Name = "child_" + desc.Name
 		}
+		if opts.name != "" {
+			desc.Name = nodeType + "_" + opts.name
+		}
 	case from:
 		e = edge.From(nodeName, ent.Schema.Type)
 		desc = e.Descriptor()
@@ -164,6 +171,10 @@ func entEdge(nodeName, nodeType string, currentNode *schemast.UpsertSchema, dir 
 			desc.Name = "parent_" + desc.Name
 			desc.RefName = "child_" + desc.RefName
 		}
+		if opts.name != "" {
+			desc.Name = opts.name
+			desc.RefName = currentNode.Name + "_" + opts.name
+		}
 	}
 	desc.Type = nodeType
 	return e
@@ -172,6 +183,7 @@ func entEdge(nodeName, nodeType string, currentNode *schemast.UpsertSchema, dir 
 // setEdgeField is a function to properly name edge fields.
 func setEdgeField(e ent.Edge, opts relOptions, childNode *schemast.UpsertSchema) {
 	edgeField := opts.edgeField
+
 	// rename the field in case the edge and the field have the same name
 	if e.Descriptor().Name == edgeField {
 		edgeField += "_id"
@@ -373,6 +385,16 @@ func upsertOneToX(mutations map[string]schemast.Mutator, table *schema.Table) {
 		}
 		idxs[idx.Parts[0].C.Name] = idx
 	}
+
+	// 创建一个映射，用于追踪同一张表的多次引用
+	refTableCount := make(map[string]int)
+	for _, fk := range table.ForeignKeys {
+		if len(fk.Columns) != 1 {
+			continue
+		}
+		refTableCount[fk.RefTable.Name]++
+	}
+
 	for _, fk := range table.ForeignKeys {
 		if len(fk.Columns) != 1 {
 			continue
@@ -392,6 +414,19 @@ func upsertOneToX(mutations map[string]schemast.Mutator, table *schema.Table) {
 		if ok && idx.Unique {
 			opts.uniqueEdgeToChild = true
 		}
+
+		// 如果同一张表被引用多次，使用字段名作为边名和引用名
+		if refTableCount[parent.Name] > 1 {
+			fieldName := colName
+			if strings.HasSuffix(fieldName, "_id") {
+				fieldName = fieldName[:len(fieldName)-3]
+			} else if strings.HasSuffix(fieldName, "Id") {
+				fieldName = fieldName[:len(fieldName)-2]
+			}
+			opts.refName = inflect.CamelizeDownFirst(fieldName)
+			opts.name = inflect.CamelizeDownFirst(fieldName)
+		}
+
 		// If at least one table in the relation does not exist, there is no point to create it.
 		parentNode, ok := mutations[parent.Name].(*schemast.UpsertSchema)
 		if !ok {
@@ -403,4 +438,9 @@ func upsertOneToX(mutations map[string]schemast.Mutator, table *schema.Table) {
 		}
 		upsertRelation(parentNode, childNode, opts)
 	}
+}
+
+// TestableUpsertOneToX 是 upsertOneToX 的可测试版本，允许直接在测试中调用它
+func TestableUpsertOneToX(mutations map[string]schemast.Mutator, table *schema.Table) {
+	upsertOneToX(mutations, table)
 }
