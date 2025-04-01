@@ -308,6 +308,9 @@ func upsertNode(field fieldFunc, table *schema.Table) (*schemast.UpsertSchema, e
 			upsert.Fields = append(upsert.Fields, fld)
 		}
 	}
+	for _, f := range upsert.Fields {
+		f.Descriptor().StorageKey = f.Descriptor().Name
+	}
 	for _, index := range table.Indexes {
 		if index.Unique && len(index.Parts) == 1 {
 			fields[index.Parts[0].C.Name].Descriptor().Unique = true
